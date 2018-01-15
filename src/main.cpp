@@ -1,4 +1,5 @@
 #include <ESP8266WiFi.h>
+#include <ESP8266mDNS.h>
 
 #include "settings.h"
 
@@ -34,6 +35,17 @@ void setupWiFi() {
     WiFi.begin(SSID, KEY);
 }
 
+void setupMDNS() {
+    Serial.print("Setting up mDNS. Hostname: ");
+    Serial.println(WiFi.hostname());
+    if (MDNS.begin(WiFi.hostname().c_str())) {
+        Serial.println("Registering mDNS service.");
+        MDNS.addService("led", "udp", 5555);
+    } else {
+        Serial.println("mDNS responder error.");
+    }
+}
+
 void setupPins() {
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(PIN_RED, OUTPUT);
@@ -42,9 +54,10 @@ void setupPins() {
 }
 
 void setup() {
+    setupPins();
     setupSerial();
     setupWiFi();
-    setupPins();
+    setupMDNS();
 }
 
 void loop() {
