@@ -1,5 +1,7 @@
 # ESP8266-based LED strip controller
 
+Intended to be controlled by https://github.com/eigenein/smart-home.
+
 ## Building
 
 Built with [PlatformIO](http://platformio.org/).
