@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
-// #include <pb_decode.h>
+#include <ArduinoJson.h>
 
 #include "settings.h"
 
@@ -77,19 +77,49 @@ void setup() {
 // Running.
 // ----------------------------------------------------------------------------
 
+void sendPacket(JsonObject& root, IPAddress ip, uint16_t port) {
+    udp.beginPacket(ip, port);
+    root.printTo(udp);
+    udp.println();
+    udp.endPacket();
+}
+
+void handlePing() {
+    StaticJsonBuffer<512> jsonBuffer;
+    JsonObject& message = jsonBuffer.createObject();
+    message["millis"] = millis();
+    sendPacket(message, udp.remoteIP(), udp.remotePort());
+}
+
+void handleSetColor(JsonObject& message) {
+    analogWrite(PIN_RED, message.get<int>("red"));
+    analogWrite(PIN_GREEN, message.get<int>("green"));
+    analogWrite(PIN_BLUE, message.get<int>("blue"));
+}
+
 void handlePacket() {
-    const int packetSize = udp.parsePacket();
-    if (packetSize == 0) {
+    if (udp.parsePacket() == 0) {
         return;
     }
 
-    unsigned char buffer[100];
-    const int length = udp.read(buffer, sizeof(buffer));
-    if (length == 0) {
+    StaticJsonBuffer<512> jsonBuffer;
+    JsonObject& message = jsonBuffer.parse(udp);
+    if (!message.success()) {
+        Serial.println("Received invalid JSON message.");
         return;
     }
 
-    // TODO.
+    JsonVariant type = message["type"];
+    if (!type.success()) {
+        Serial.println("Received invalid message type.");
+        return;
+    }
+
+    if (type == F("ping")) {
+        handlePing();
+    } else if (type == F("setColor")) {
+        handleSetColor(message);
+    }
 }
 
 void loop() {

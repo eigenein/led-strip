@@ -13,7 +13,7 @@ static const char KEY[] = "Your Wi-Fi key";
 
 ### mDNS
 
-Device registers itself in [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS) under a name `ESP_XXXXXX` where `XXXXXX` is the chip number:
+Device registers itself in [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS) under a default name of `ESP_XXXXXX` where `XXXXXX` is the chip number:
 
 ```
 $ dns-sd -B _led._udp
@@ -26,4 +26,47 @@ Timestamp     A/R    Flags  if Domain               Service Type         Instanc
 
 ### Communication
 
-Device uses [Protocol Buffers](https://developers.google.com/protocol-buffers/) on application level.
+At application level the device uses JSON over UDP. Entire `Message` must be сontained within one datagram.
+
+The following example demonstrates how communication is done:
+
+```python
+In [18]: import socket
+
+In [19]: s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+In [20]: s.sendto(b'{"type": "ping"}', ('ESP_380D93.local', 5555))
+Out[20]: 16
+
+In [21]: print(s.recv(1000).decode())
+{"millis":1110940}
+```
+
+#### Ping
+
+```json
+{
+    "type": "ping"
+}
+```
+
+##### Response
+
+```json
+{
+    "millis": 1110940
+}
+```
+
+#### Set static color
+
+```json
+{
+    "type": "setColor",
+    "red": 1023,
+    "green": 512,
+    "blue": 512
+}
+```
+
+This message has no response.
