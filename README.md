@@ -11,6 +11,7 @@ Before building, create `src/settings.h` and configure your Wi-Fi access point:
 ```cpp
 static const char SSID[] = "Your Wi-Fi name";
 static const char KEY[] = "Your Wi-Fi key";
+static const char UUID[] = "00000000000000000000000000000000";
 ```
 
 ## mDNS
@@ -18,12 +19,12 @@ static const char KEY[] = "Your Wi-Fi key";
 Device registers itself in [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS) under a default name of `ESP_XXXXXX` where `XXXXXX` is the chip number:
 
 ```
-$ dns-sd -B _led._udp
-Browsing for _led._udp
-DATE: ---Mon 15 Jan 2018---
-21:09:31.707  ...STARTING...
+$ dns-sd -B _smart_home._udp
+Browsing for _smart_home._udp
+DATE: ---Tue 16 Jan 2018---
+20:11:17.202  ...STARTING...
 Timestamp     A/R    Flags  if Domain               Service Type         Instance Name
-21:09:31.913  Add        2   7 local.               _led._udp.           ESP_380D93
+20:11:17.430  Add        2   7 local.               _smart_home._udp.    ESP_380D93
 ```
 
 ## Communication
@@ -56,7 +57,9 @@ In [21]: print(s.recv(1000).decode())
 
 ```json
 {
-    "millis": 1110940
+    "millis": 1110940,
+    "uuid": "00000000000000000000000000000000",
+    "type": "LED"
 }
 ```
 

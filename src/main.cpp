@@ -52,7 +52,7 @@ void setupMDNS() {
     Serial.println(WiFi.hostname());
     if (MDNS.begin(WiFi.hostname().c_str())) {
         Serial.println("Registering mDNS service.");
-        MDNS.addService("led", "udp", PORT);
+        MDNS.addService("smart_home", "udp", PORT);
     } else {
         Serial.println("mDNS responder error.");
     }
@@ -88,6 +88,8 @@ void handlePing() {
     StaticJsonBuffer<512> jsonBuffer;
     JsonObject& message = jsonBuffer.createObject();
     message["millis"] = millis();
+    message["type"] = "LED";
+    message["uuid"] = UUID;
     sendPacket(message, udp.remoteIP(), udp.remotePort());
 }
 
