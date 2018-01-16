@@ -1,6 +1,6 @@
-## ESP8266-based LED strip controller
+# ESP8266-based LED strip controller
 
-### Building
+## Building
 
 Built with [PlatformIO](http://platformio.org/).
 
@@ -11,7 +11,7 @@ static const char SSID[] = "Your Wi-Fi name";
 static const char KEY[] = "Your Wi-Fi key";
 ```
 
-### mDNS
+## mDNS
 
 Device registers itself in [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS) under a default name of `ESP_XXXXXX` where `XXXXXX` is the chip number:
 
@@ -24,7 +24,7 @@ Timestamp     A/R    Flags  if Domain               Service Type         Instanc
 21:09:31.913  Add        2   7 local.               _led._udp.           ESP_380D93
 ```
 
-### Communication
+## Communication
 
 At application level the device uses JSON over UDP. Entire `Message` must be сontained within one datagram.
 
@@ -42,7 +42,7 @@ In [21]: print(s.recv(1000).decode())
 {"millis":1110940}
 ```
 
-#### Ping
+### Ping
 
 ```json
 {
@@ -50,7 +50,7 @@ In [21]: print(s.recv(1000).decode())
 }
 ```
 
-##### Response
+#### Response
 
 ```json
 {
@@ -58,7 +58,7 @@ In [21]: print(s.recv(1000).decode())
 }
 ```
 
-#### Set static color
+### Set static color
 
 ```json
 {
