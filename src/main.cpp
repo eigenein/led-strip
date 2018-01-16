@@ -52,7 +52,7 @@ void setupMDNS() {
     Serial.println(WiFi.hostname());
     if (MDNS.begin(WiFi.hostname().c_str())) {
         Serial.println("Registering mDNS service.");
-        MDNS.addService("smart_home", "udp", PORT);
+        MDNS.addService("smart-home", "udp", PORT);
     } else {
         Serial.println("mDNS responder error.");
     }

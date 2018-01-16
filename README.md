@@ -24,7 +24,7 @@ Browsing for _smart_home._udp
 DATE: ---Tue 16 Jan 2018---
 20:11:17.202  ...STARTING...
 Timestamp     A/R    Flags  if Domain               Service Type         Instance Name
-20:11:17.430  Add        2   7 local.               _smart_home._udp.    ESP_380D93
+20:11:17.430  Add        2   7 local.               _smart-home._udp.    ESP_380D93
 ```
 
 ## Communication
