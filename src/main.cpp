@@ -84,13 +84,14 @@ void sendPacket(JsonObject& root, IPAddress ip, uint16_t port) {
     udp.endPacket();
 }
 
-void handlePing() {
+void handlePing(JsonObject& message) {
     StaticJsonBuffer<512> jsonBuffer;
-    JsonObject& message = jsonBuffer.createObject();
-    message["millis"] = millis();
-    message["deviceType"] = "LED";
-    message["uuid"] = UUID;
-    sendPacket(message, udp.remoteIP(), udp.remotePort());
+    JsonObject& response = jsonBuffer.createObject();
+    response["messageId"] = message.get<int>("messageId");
+    response["millis"] = millis();
+    response["deviceType"] = "LED";
+    response["uuid"] = UUID;
+    sendPacket(response, udp.remoteIP(), udp.remotePort());
 }
 
 void handleSetColor(JsonObject& message) {
@@ -118,7 +119,7 @@ void handlePacket() {
     }
 
     if (type == F("ping")) {
-        handlePing();
+        handlePing(message);
     } else if (type == F("setColor")) {
         handleSetColor(message);
     }

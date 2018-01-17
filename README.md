@@ -49,6 +49,7 @@ In [21]: print(s.recv(1000).decode())
 
 ```json
 {
+    "messageId": 42,
     "type": "ping"
 }
 ```
@@ -57,6 +58,7 @@ In [21]: print(s.recv(1000).decode())
 
 ```json
 {
+    "messageId": 42,
     "millis": 1110940,
     "uuid": "00000000000000000000000000000000",
     "deviceType": "LED"
