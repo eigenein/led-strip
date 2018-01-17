@@ -88,7 +88,7 @@ void handlePing() {
     StaticJsonBuffer<512> jsonBuffer;
     JsonObject& message = jsonBuffer.createObject();
     message["millis"] = millis();
-    message["type"] = "LED";
+    message["deviceType"] = "LED";
     message["uuid"] = UUID;
     sendPacket(message, udp.remoteIP(), udp.remotePort());
 }
