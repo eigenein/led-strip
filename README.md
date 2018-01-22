@@ -6,7 +6,7 @@ Intended to be controlled by https://github.com/eigenein/smart-home.
 
 * [WeMos D1 mini compatible board](https://www.aliexpress.com/item/WeMos-D1-mini-PRO-analog-WiFi-D1-mini-PRO-integration-of-ESP8266-32Mb-flash-and-USB/32806566263.html).
 * Three [STP16NF06L](https://www.aliexpress.com/item/STP16NF06L-STP16NE06-STP16NF06-5pcs-lot/32375609225.html).
-* [5V LED strip](https://www.aliexpress.com/item/RGB-LED-Strip-Waterproof-5050-DC-5V-USB-LED-Light-Strips-Flexible-bias-Lighting-50cm-1m/32826222420.html)
+* [5V LED strip](https://www.aliexpress.com/item/RGB-LED-Strip-Waterproof-5050-DC-5V-USB-LED-Light-Strips-Flexible-bias-Lighting-50cm-1m/32826222420.html).
 
 ## Building
 
