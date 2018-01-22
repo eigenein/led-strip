@@ -35,20 +35,31 @@ Timestamp     A/R    Flags  if Domain               Service Type         Instanc
 
 ## Communication
 
-At application level the device uses JSON over UDP. Entire `Message` must be сontained within one datagram.
+At application level the device uses JSON over UDP. Entire message must be сontained within one datagram. Each message may contain the `messageId` integer field which is simply sent back in the response.
 
-The following example demonstrates how communication is done:
+The following example demonstrates how the communication is done:
 
 ```python
 In [18]: import socket
 
 In [19]: s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-In [20]: s.sendto(b'{"type": "ping"}', ('ESP_380D93.local', 5555))
+In [20]: s.sendto(b'{"type": "ping", "messageId": 42}', ('ESP_380D93.local', 5555))
 Out[20]: 16
 
 In [21]: print(s.recv(1000).decode())
-{"millis":1110940}
+{...}
+```
+
+The device always responds with its current state:
+
+```json
+{
+    "messageId": 42,
+    "millis": 1110940,
+    "uuid": "00000000000000000000000000000000",
+    "deviceType": "LED"
+}
 ```
 
 ### Ping
@@ -57,17 +68,6 @@ In [21]: print(s.recv(1000).decode())
 {
     "messageId": 42,
     "type": "ping"
-}
-```
-
-#### Response
-
-```json
-{
-    "messageId": 42,
-    "millis": 1110940,
-    "uuid": "00000000000000000000000000000000",
-    "deviceType": "LED"
 }
 ```
 
@@ -81,5 +81,3 @@ In [21]: print(s.recv(1000).decode())
     "blue": 512
 }
 ```
-
-This message has no response.
