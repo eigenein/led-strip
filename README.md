@@ -58,7 +58,7 @@ The device always responds with its current state:
     "messageId": 42,
     "millis": 1110940,
     "uuid": "00000000000000000000000000000000",
-    "deviceType": "LED"
+    "deviceType": "RGB"
 }
 ```
 
