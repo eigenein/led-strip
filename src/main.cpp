@@ -138,7 +138,7 @@ void sendResponse(JsonObject& message) {
     JsonObject& response = jsonBuffer.createObject();
     response["messageId"] = message.get<int>("messageId");
     response["millis"] = millis();
-    response["deviceType"] = "RGB";
+    response["deviceType"] = "MulticolorLighting";
     response["uuid"] = uuid;
     sendPacket(response, udp.remoteIP(), udp.remotePort());
 }
