@@ -13,6 +13,7 @@ const int PORT = 5555;
 const int PIN_RED = D1;
 const int PIN_GREEN = D2;
 const int PIN_BLUE = D3;
+const int PIN_WIFI = D4;
 const int PIN_WPS = D5;
 
 // Setting up.
@@ -23,15 +24,18 @@ WiFiEventHandler wifiConnectedHandler, wifiGotIpHandler, wifiDisconnected;
 String uuid;
 
 void startWPS() {
-    // WPS button interrupt handler.
+    // Cannot be used in an interrupt handler because of some bug in WiFi class.
+    Serial.println("Disconnecting from Wi-Fi.");
+    WiFi.disconnect();
     Serial.println("Starting WPS.");
-    WiFi.beginWPSConfig();
+    if (!WiFi.beginWPSConfig()) {
+        Serial.println("Failed to start WPS.");
+    }
 }
 
 void setupPins() {
-    // Built-in LED displays Wi-Fi connection status.
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, HIGH);
+    pinMode(PIN_WIFI, OUTPUT);
+    digitalWrite(PIN_WIFI, HIGH);
 
     pinMode(PIN_RED, OUTPUT);
     pinMode(PIN_GREEN, OUTPUT);
@@ -39,7 +43,6 @@ void setupPins() {
 
     // WPS button.
     pinMode(PIN_WPS, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(PIN_WPS), startWPS, FALLING);
 }
 
 void setupSerial() {
@@ -84,14 +87,15 @@ void setupWiFi() {
     wifiGotIpHandler = WiFi.onStationModeGotIP([](const WiFiEventStationModeGotIP& event) {
         Serial.print("Got IP: ");
         Serial.println(WiFi.localIP());
-        digitalWrite(LED_BUILTIN, LOW);
+        digitalWrite(PIN_WIFI, LOW);
     });
     wifiDisconnected = WiFi.onStationModeDisconnected([](const WiFiEventStationModeDisconnected& event) {
         Serial.println("Disconnected from Wi-Fi.");
-        digitalWrite(LED_BUILTIN, HIGH);
+        digitalWrite(PIN_WIFI, HIGH);
     });
 
     Serial.println("Connecting to Wi-Fi.");
+    WiFi.mode(WIFI_STA);
     WiFi.begin();
 }
 
@@ -178,7 +182,14 @@ void handlePacket() {
     }
 }
 
+void handleWPS() {
+    if (digitalRead(PIN_WPS) == LOW) {
+        delay(100);
+        startWPS();
+    }
+}
+
 void loop() {
     handlePacket();
-    yield();
+    handleWPS();
 }
