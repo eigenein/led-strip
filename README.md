@@ -31,7 +31,7 @@ Timestamp     A/R    Flags  if Domain               Service Type         Instanc
 
 ## Device unique identifier
 
-The device mounts SPIFFS and looks for the file `/uuid.txt`. If the file is missing, a new random UUID is generated and written to the file.
+The device mounts SPIFFS and looks for the file `/uuid.txt`. If the file is missing, a new random UUID is generated and written to the file. *Do not share the UUID!*
 
 ## Communication
 
