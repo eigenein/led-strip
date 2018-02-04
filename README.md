@@ -2,7 +2,7 @@
 
 ## Parts
 
-* [PCB](http://s.click.aliexpress.com/e/bA27UN7?fromSns=Telegram).
+* [Printed circuit board.](http://s.click.aliexpress.com/e/bA27UN7?fromSns=Telegram).
 * [WeMos D1 mini compatible board](http://s.click.aliexpress.com/e/u7Ubune?fromSns=Telegram).
 * Three [IRLB3034PBF](http://s.click.aliexpress.com/e/yRnQNzR?fromSns=Telegram).
 * [5V LED strip](http://s.click.aliexpress.com/e/emimIQJ?fromSns=Telegram).
