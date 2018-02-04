@@ -17,8 +17,8 @@
 Device registers itself in [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS) under a default name of `ESP_XXXXXX` where `XXXXXX` is the chip number:
 
 ```
-$ dns-sd -B _smart_home._udp
-Browsing for _smart_home._udp
+$ dns-sd -B _smart-home._udp
+Browsing for _smart-home._udp
 DATE: ---Tue 16 Jan 2018---
 20:11:17.202  ...STARTING...
 Timestamp     A/R    Flags  if Domain               Service Type         Instance Name

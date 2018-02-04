@@ -53,9 +53,9 @@ void setupSerial() {
 
 void setupStrip() {
     // TODO: read state from the FS.
-    analogWrite(PIN_RED, 128);
-    analogWrite(PIN_GREEN, 128);
-    analogWrite(PIN_BLUE, 128);
+    analogWrite(PIN_RED, 1023);
+    analogWrite(PIN_GREEN, 1023);
+    analogWrite(PIN_BLUE, 1023);
 }
 
 void setupFS() {
