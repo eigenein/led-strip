@@ -2,9 +2,13 @@
 
 ## Parts
 
-* [WeMos D1 mini compatible board](https://www.aliexpress.com/item/WeMos-D1-mini-PRO-analog-WiFi-D1-mini-PRO-integration-of-ESP8266-32Mb-flash-and-USB/32806566263.html).
-* Three [STP16NF06L](https://www.aliexpress.com/item/STP16NF06L-STP16NE06-STP16NF06-5pcs-lot/32375609225.html).
-* [5V LED strip](https://www.aliexpress.com/item/RGB-LED-Strip-Waterproof-5050-DC-5V-USB-LED-Light-Strips-Flexible-bias-Lighting-50cm-1m/32826222420.html).
+* [PCB](http://s.click.aliexpress.com/e/bA27UN7?fromSns=Telegram).
+* [WeMos D1 mini compatible board](http://s.click.aliexpress.com/e/u7Ubune?fromSns=Telegram).
+* Three [IRLB3034PBF](http://s.click.aliexpress.com/e/yRnQNzR?fromSns=Telegram).
+* [5V LED strip](http://s.click.aliexpress.com/e/emimIQJ?fromSns=Telegram).
+* Three 220μF capacitors.
+
+*Note: you have to short-circuit the diode between VBUS and +5V because it can not take enough current.*
 
 ## Getting started
 
