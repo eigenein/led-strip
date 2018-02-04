@@ -144,6 +144,7 @@ void sendResponse(JsonObject& message) {
     response["millis"] = millis();
     response["deviceType"] = "MULTICOLOR_LIGHTING";
     response["uuid"] = uuid;
+    response["name"] = WiFi.hostname();
     sendPacket(response, udp.remoteIP(), udp.remotePort());
 }
 
