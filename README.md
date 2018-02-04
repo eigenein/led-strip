@@ -48,7 +48,6 @@ In [20]: s.sendto(b'{"type": "ping", "messageId": 42}', ('ESP_380D93.local', 555
 Out[20]: 16
 
 In [21]: print(s.recv(1000).decode())
-{...}
 ```
 
 The device always responds with its current state:
@@ -64,6 +63,8 @@ The device always responds with its current state:
 
 ### Ping
 
+Used to discover the device type and to get its current state.
+
 ```json
 {
     "messageId": 42,
@@ -72,6 +73,8 @@ The device always responds with its current state:
 ```
 
 ### Set static color
+
+Used to set a static lighting color.
 
 ```json
 {
