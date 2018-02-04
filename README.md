@@ -58,7 +58,7 @@ The device always responds with its current state:
     "messageId": 42,
     "millis": 1110940,
     "uuid": "00000000-0000-0000-0000-000000000000",
-    "deviceType": "MulticolorLighting"
+    "deviceType": "MULTICOLOR_LIGHTING"
 }
 ```
 
@@ -76,8 +76,8 @@ The device always responds with its current state:
 ```json
 {
     "type": "setColor",
-    "red": 1023,
-    "green": 512,
-    "blue": 512
+    "red": 1.0,
+    "green": 0.5,
+    "blue": 0.5
 }
 ```

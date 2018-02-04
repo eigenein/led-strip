@@ -142,7 +142,7 @@ void sendResponse(JsonObject& message) {
     JsonObject& response = jsonBuffer.createObject();
     response["messageId"] = message.get<int>("messageId");
     response["millis"] = millis();
-    response["deviceType"] = "MulticolorLighting";
+    response["deviceType"] = "MULTICOLOR_LIGHTING";
     response["uuid"] = uuid;
     sendPacket(response, udp.remoteIP(), udp.remotePort());
 }
@@ -152,9 +152,9 @@ void handlePing(JsonObject& message) {
 }
 
 void handleSetColor(JsonObject& message) {
-    analogWrite(PIN_RED, message.get<int>("red"));
-    analogWrite(PIN_GREEN, message.get<int>("green"));
-    analogWrite(PIN_BLUE, message.get<int>("blue"));
+    analogWrite(PIN_RED, PWMRANGE * message.get<float>("red"));
+    analogWrite(PIN_GREEN, PWMRANGE * message.get<float>("green"));
+    analogWrite(PIN_BLUE, PWMRANGE * message.get<float>("blue"));
 }
 
 void handlePacket() {
