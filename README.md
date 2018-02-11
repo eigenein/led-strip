@@ -58,7 +58,11 @@ The device always responds with its current state:
     "millis": 1110940,
     "uuid": "00000000-0000-0000-0000-000000000000",
     "deviceType": "MULTICOLOR_LIGHTING",
-    "name": "ESP_380D93"
+    "name": "ESP_380D93",
+    "red": 1,
+    "green": 1,
+    "blue": 1,
+    "turnedOn": true
 }
 ```
 
@@ -69,7 +73,7 @@ Used to discover the device type and to get its current state.
 ```json
 {
     "messageId": 42,
-    "type": "ping"
+    "type": "PING"
 }
 ```
 
@@ -79,7 +83,7 @@ Used to set a static lighting color.
 
 ```json
 {
-    "type": "setColor",
+    "type": "SET_COLOR",
     "red": 1.0,
     "green": 0.5,
     "blue": 0.5

@@ -16,6 +16,11 @@ const int PIN_BLUE = D3;
 const int PIN_WIFI = D4;
 const int PIN_WPS = D5;
 
+// State.
+// ----------------------------------------------------------------------------
+bool turnedOn;
+float red, green, blue;
+
 // Setting up.
 // ----------------------------------------------------------------------------
 
@@ -51,8 +56,10 @@ void setupSerial() {
     Serial.println("Serial is ready.");
 }
 
-void setupStrip() {
+void setupState() {
     // TODO: read state from the FS.
+    turnedOn = true;
+    red = green = blue = 1.0;
     analogWrite(PIN_RED, 1023);
     analogWrite(PIN_GREEN, 1023);
     analogWrite(PIN_BLUE, 1023);
@@ -67,7 +74,8 @@ void setupUUID() {
     File uuidFile = SPIFFS.open("/uuid.txt", "r");
     if (uuidFile) {
         Serial.print("Reading UUID: ");
-        uuid = uuidFile.readStringUntil('\n');
+        uuid = uuidFile.readString();
+        uuid.trim();
     } else {
         Serial.print("Generating UUID: ");
         byte uuidBuffer[16];
@@ -119,7 +127,7 @@ void setupUDP() {
 void setup() {
     setupPins();
     setupSerial();
-    setupStrip();
+    setupState();
     setupFS();
     setupUUID();
     setupWiFi();
@@ -145,17 +153,39 @@ void sendResponse(JsonObject& message) {
     response["deviceType"] = "MULTICOLOR_LIGHTING";
     response["uuid"] = uuid;
     response["name"] = WiFi.hostname();
+    response["red"] = red;
+    response["green"] = green;
+    response["blue"] = blue;
+    response["turnedOn"] = turnedOn;
     sendPacket(response, udp.remoteIP(), udp.remotePort());
 }
 
-void handlePing(JsonObject& message) {
-    sendResponse(message);
+void handleSetColor(JsonObject& message) {
+    turnedOn = true;
+
+    red = message.get<float>("red");
+    green = message.get<float>("green");
+    blue =  message.get<float>("blue");
+
+    analogWrite(PIN_RED, PWMRANGE * red);
+    analogWrite(PIN_GREEN, PWMRANGE * green);
+    analogWrite(PIN_BLUE, PWMRANGE * blue);
 }
 
-void handleSetColor(JsonObject& message) {
-    analogWrite(PIN_RED, PWMRANGE * message.get<float>("red"));
-    analogWrite(PIN_GREEN, PWMRANGE * message.get<float>("green"));
-    analogWrite(PIN_BLUE, PWMRANGE * message.get<float>("blue"));
+void handleTurnOn() {
+    turnedOn = true;
+
+    analogWrite(PIN_RED, PWMRANGE * red);
+    analogWrite(PIN_GREEN, PWMRANGE * green);
+    analogWrite(PIN_BLUE, PWMRANGE * blue);
+}
+
+void handleTurnOff() {
+    turnedOn = false;
+
+    analogWrite(PIN_RED, 0);
+    analogWrite(PIN_GREEN, 0);
+    analogWrite(PIN_BLUE, 0);
 }
 
 void handlePacket() {
@@ -176,11 +206,19 @@ void handlePacket() {
         return;
     }
 
-    if (type == "ping") {
-        handlePing(message);
-    } else if (type == "setColor") {
+    if (type == "PING") {
+        // Do nothing.
+    } else if (type == "SET_COLOR") {
         handleSetColor(message);
+    } else if (type == "TURN_ON") {
+        handleTurnOn();
+    } else if (type == "TURN_OFF") {
+        handleTurnOff();
+    } else {
+        return;
     }
+
+    sendResponse(message);
 }
 
 void handleWPS() {
