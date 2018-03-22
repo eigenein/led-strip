@@ -10,9 +10,9 @@
 
 const int PORT = 5555;
 
-const int PIN_RED = D1;
-const int PIN_GREEN = D2;
-const int PIN_BLUE = D3;
+const int PIN_BLUE = D1;
+const int PIN_RED = D2;
+const int PIN_GREEN = D3;
 const int PIN_WIFI = D4;
 const int PIN_WPS = D5;
 
