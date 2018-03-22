@@ -4,8 +4,9 @@
 
 * [Printed circuit board](http://s.click.aliexpress.com/e/bA27UN7?fromSns=Telegram).
 * [WeMos D1 mini compatible board](http://s.click.aliexpress.com/e/u7Ubune?fromSns=Telegram).
-* Three [IRLB3034PBF](http://s.click.aliexpress.com/e/yRnQNzR?fromSns=Telegram).
+* Three [TN0610N3-G](https://www.aliexpress.com/item/TN0610N3-TN0610N3-G-TN0610-TO-92/32814210792.html).
 * [5V LED strip](http://s.click.aliexpress.com/e/emimIQJ?fromSns=Telegram).
+* [Push button](https://www.aliexpress.com/item/50pcs-lot-6x6x4-3MM-4PIN-G89-Tactile-Tact-Push-Button-Micro-Switch-Direct-Plug-in-Self/32669948621.html)
 * Three 220μF capacitors.
 
 *Note: you have to short-circuit the diode between VBUS and +5V because it can not take enough current.*
