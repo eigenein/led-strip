@@ -147,24 +147,24 @@ void sendPacket(JsonObject& root, IPAddress ip, uint16_t port) {
 void sendResponse(JsonObject& message) {
     StaticJsonBuffer<512> jsonBuffer;
     JsonObject& response = jsonBuffer.createObject();
-    response["messageId"] = message.get<int>("messageId");
-    response["millis"] = millis();
-    response["deviceType"] = "MULTICOLOR_LIGHTING";
-    response["uuid"] = uuid;
+    response["mid"] = message.get<int>("messageId");
+    response["ms"] = millis();
+    response["t"] = "MULTICOLOR_LIGHTING";
+    response["id"] = uuid;
     response["name"] = WiFi.hostname();
-    response["red"] = red;
-    response["green"] = green;
-    response["blue"] = blue;
-    response["turnedOn"] = turnedOn;
+    response["r"] = red;
+    response["g"] = green;
+    response["b"] = blue;
+    response["on"] = turnedOn;
     sendPacket(response, udp.remoteIP(), udp.remotePort());
 }
 
 void handleSetColor(JsonObject& message) {
     turnedOn = true;
 
-    red = message.get<float>("red");
-    green = message.get<float>("green");
-    blue =  message.get<float>("blue");
+    red = message.get<float>("r");
+    green = message.get<float>("g");
+    blue =  message.get<float>("b");
 
     analogWrite(PIN_RED, PWMRANGE * red);
     analogWrite(PIN_GREEN, PWMRANGE * green);
@@ -199,7 +199,7 @@ void handlePacket() {
         return;
     }
 
-    JsonVariant type = message["type"];
+    JsonVariant type = message["t"];
     if (!type.success()) {
         Serial.println("Received invalid message type.");
         return;

@@ -45,7 +45,7 @@ In [18]: import socket
 
 In [19]: s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-In [20]: s.sendto(b'{"type": "ping", "messageId": 42}', ('ESP_380D93.local', 5555))
+In [20]: s.sendto(b'{"t": "PING", "mid": 42}', ('ESP_380D93.local', 5555))
 Out[20]: 16
 
 In [21]: print(s.recv(1000).decode())
@@ -55,15 +55,15 @@ The device always responds with its current state:
 
 ```json
 {
-    "messageId": 42,
-    "millis": 1110940,
-    "uuid": "00000000-0000-0000-0000-000000000000",
-    "deviceType": "MULTICOLOR_LIGHTING",
+    "mid": 42,
+    "ms": 1110940,
+    "id": "00000000-0000-0000-0000-000000000000",
+    "t": "MULTICOLOR_LIGHTING",
     "name": "ESP_380D93",
-    "red": 1,
-    "green": 1,
-    "blue": 1,
-    "turnedOn": true
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "on": true
 }
 ```
 
@@ -73,8 +73,8 @@ Used to discover the device type and to get its current state.
 
 ```json
 {
-    "messageId": 42,
-    "type": "PING"
+    "mid": 42,
+    "t": "PING"
 }
 ```
 
@@ -84,9 +84,9 @@ Used to set a static lighting color.
 
 ```json
 {
-    "type": "SET_COLOR",
-    "red": 1.0,
-    "green": 0.5,
-    "blue": 0.5
+    "t": "SET_COLOR",
+    "r": 1.0,
+    "g": 0.5,
+    "b": 0.5
 }
 ```
