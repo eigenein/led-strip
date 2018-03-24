@@ -217,9 +217,7 @@ void handlePacket() {
         return;
     }
 
-    if (!message.get<bool>("silent")) {
-        sendResponse(message);
-    }
+    sendResponse(message);
 }
 
 void handleWPS() {
