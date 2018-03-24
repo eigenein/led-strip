@@ -82,7 +82,7 @@ void setupUUID() {
         ESP8266TrueRandom.uuid(uuidBuffer);
         uuid = ESP8266TrueRandom.uuidToString(uuidBuffer);
         uuidFile = SPIFFS.open("/uuid.txt", "w");
-        uuidFile.println(uuid);
+        uuidFile.print(uuid);
     }
     uuidFile.close();
     Serial.println(uuid);
@@ -141,7 +141,6 @@ void setup() {
 void sendPacket(JsonObject& root, IPAddress ip, uint16_t port) {
     udp.beginPacket(ip, port);
     root.printTo(udp);
-    udp.println();
     udp.endPacket();
 }
 
@@ -218,7 +217,9 @@ void handlePacket() {
         return;
     }
 
-    sendResponse(message);
+    if (!message.get<bool>("silent")) {
+        sendResponse(message);
+    }
 }
 
 void handleWPS() {
