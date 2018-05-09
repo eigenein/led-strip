@@ -7,7 +7,6 @@
 * Three [TN0610N3-G](https://www.aliexpress.com/item/TN0610N3-TN0610N3-G-TN0610-TO-92/32814210792.html).
 * [5V LED strip](http://s.click.aliexpress.com/e/emimIQJ?fromSns=Telegram).
 * [Push button](https://www.aliexpress.com/item/50pcs-lot-6x6x4-3MM-4PIN-G89-Tactile-Tact-Push-Button-Micro-Switch-Direct-Plug-in-Self/32669948621.html)
-* Three 220μF capacitors.
 
 *Note: you have to short-circuit the diode between VBUS and +5V because it can not take enough current.*
 
@@ -30,13 +29,9 @@ Timestamp     A/R    Flags  if Domain               Service Type         Instanc
 20:11:17.430  Add        2   7 local.               _smart-home._udp.    ESP_380D93
 ```
 
-## Device unique identifier
-
-The device mounts SPIFFS and looks for the file `/uuid.txt`. If the file is missing, a new random UUID is generated and written to the file. *Do not share the UUID!*
-
 ## Communication
 
-At application level the device uses JSON over UDP. Entire message must be сontained within one datagram. Each message may contain the `messageId` integer field which is simply sent back in the response.
+At application level the device uses JSON over UDP. Entire message must be сontained within one datagram.
 
 The following example demonstrates how the communication is done:
 
@@ -51,11 +46,10 @@ Out[20]: 16
 In [21]: print(s.recv(1000).decode())
 ```
 
-The device always responds with its current state:
+The device may send a state update in response. State update contains a device identifier and fields which should be updated on a remote side:
 
 ```json
 {
-    "mid": 42,
     "ms": 1110940,
     "id": "00000000-0000-0000-0000-000000000000",
     "t": "MULTICOLOR_LIGHTING",
@@ -69,7 +63,7 @@ The device always responds with its current state:
 
 ### Ping
 
-Used to discover the device type and to get its current state.
+Used to discover a device. The device will send its entire current state in response.
 
 ```json
 {
@@ -78,9 +72,9 @@ Used to discover the device type and to get its current state.
 }
 ```
 
-### Set static color
+### `SET_COLOR`
 
-Used to set a static lighting color.
+Set a static lighting color.
 
 ```json
 {
@@ -90,3 +84,21 @@ Used to set a static lighting color.
     "b": 0.5
 }
 ```
+
+### `TURN_ON`
+
+Turn on lighting.
+
+```json
+{
+    "t": "TURN_ON"
+}
+
+### `TURN_ON`
+
+Turn off lighting.
+
+```json
+{
+    "t": "TURN_OFF"
+}
