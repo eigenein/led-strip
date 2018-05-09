@@ -3,7 +3,6 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoJson.h>
-#include <ESP8266TrueRandom.h>
 
 // Constants.
 // ----------------------------------------------------------------------------
@@ -26,7 +25,6 @@ float red, green, blue;
 
 WiFiUDP udp;
 WiFiEventHandler wifiConnectedHandler, wifiGotIpHandler, wifiDisconnected;
-String uuid;
 
 void startWPS() {
     // Cannot be used in an interrupt handler because of some bug in WiFi class.
@@ -70,24 +68,6 @@ void setupFS() {
     Serial.println(SPIFFS.begin() ? "ok." : "failed.");
 }
 
-void setupUUID() {
-    File uuidFile = SPIFFS.open("/uuid.txt", "r");
-    if (uuidFile) {
-        Serial.print("Reading UUID: ");
-        uuid = uuidFile.readString();
-        uuid.trim();
-    } else {
-        Serial.print("Generating UUID: ");
-        byte uuidBuffer[16];
-        ESP8266TrueRandom.uuid(uuidBuffer);
-        uuid = ESP8266TrueRandom.uuidToString(uuidBuffer);
-        uuidFile = SPIFFS.open("/uuid.txt", "w");
-        uuidFile.print(uuid);
-    }
-    uuidFile.close();
-    Serial.println(uuid);
-}
-
 void setupWiFi() {
     wifiConnectedHandler = WiFi.onStationModeConnected([](const WiFiEventStationModeConnected& event) {
         Serial.println("Connected to Wi-Fi.");
@@ -129,7 +109,6 @@ void setup() {
     setupSerial();
     setupState();
     setupFS();
-    setupUUID();
     setupWiFi();
     setupMDNS();
     setupUDP();
@@ -150,8 +129,8 @@ void sendResponse(JsonObject& message) {
     response["mid"] = message.get<int>("messageId");
     response["ms"] = millis();
     response["t"] = "MULTICOLOR_LIGHTING";
-    response["id"] = uuid;
-    response["name"] = WiFi.hostname();
+    response["id"] = WiFi.hostname();
+    response["name"] = WiFi.hostname();  // TODO: make customizable.
     response["r"] = red;
     response["g"] = green;
     response["b"] = blue;

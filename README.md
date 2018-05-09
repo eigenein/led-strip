@@ -40,7 +40,7 @@ In [18]: import socket
 
 In [19]: s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-In [20]: s.sendto(b'{"t": "PING", "mid": 42}', ('ESP_380D93.local', 5555))
+In [20]: s.sendto(b'{"t": "PING"}', ('ESP_380D93.local', 5555))
 Out[20]: 16
 
 In [21]: print(s.recv(1000).decode())
@@ -51,7 +51,7 @@ The device may send a state update in response. State update contains a device i
 ```json
 {
     "ms": 1110940,
-    "id": "00000000-0000-0000-0000-000000000000",
+    "id": "ESP_380D93",
     "t": "MULTICOLOR_LIGHTING",
     "name": "ESP_380D93",
     "r": 1,
@@ -67,7 +67,6 @@ Used to discover a device. The device will send its entire current state in resp
 
 ```json
 {
-    "mid": 42,
     "t": "PING"
 }
 ```
