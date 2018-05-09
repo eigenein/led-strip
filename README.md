@@ -13,7 +13,7 @@
 ## Getting started
 
 * Build with [PlatformIO](http://platformio.org/).
-* Hold the WPS button on your router and then click the WPS button on the device. The built-in LED will light once the device is connected to Wi-Fi and IP address is obtained.
+* Hold the WPS button on your router and then hold the WPS button on the device for a second. The built-in LED will light once the device is connected to Wi-Fi and IP address is obtained.
 * Use [Android app](https://github.com/eigenein/smart-home) to discover and control the device.
 
 ## Device discovery

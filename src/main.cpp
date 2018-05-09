@@ -201,8 +201,10 @@ void handlePacket() {
 
 void handleWPS() {
     if (digitalRead(PIN_WPS) == LOW) {
-        delay(100);
-        startWPS();
+        delay(1000);
+        if (digitalRead(PIN_WPS) == LOW) {
+            startWPS();
+        }
     }
 }
 
