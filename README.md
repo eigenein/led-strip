@@ -7,8 +7,12 @@
 * Three [TN0610N3-G](https://www.aliexpress.com/item/TN0610N3-TN0610N3-G-TN0610-TO-92/32814210792.html).
 * [5V LED strip](http://s.click.aliexpress.com/e/emimIQJ?fromSns=Telegram).
 * [Push button](https://www.aliexpress.com/item/50pcs-lot-6x6x4-3MM-4PIN-G89-Tactile-Tact-Push-Button-Micro-Switch-Direct-Plug-in-Self/32669948621.html)
+* [TSOP38238](https://www.aliexpress.com/item/5pcs-lot-TSOP38238-IC-RCVR-MOD-38KHZ-DOME-AXIAL-38238-P38238-OP38238-good-quality-free-shipping/32818684904.html)
 
-*Note: you have to short-circuit the diode between VBUS and +5V because it can not take enough current.*
+## Notes
+
+* The device is not finished yet. E.g. infrared receiver is not functioning. Also, communication protocol is subject to change.
+* You have to short-circuit the diode between VBUS and +5V because it can not take enough current.
 
 ## Getting started
 
@@ -92,8 +96,9 @@ Turn on lighting.
 {
     "t": "TURN_ON"
 }
+```
 
-### `TURN_ON`
+### `TURN_OFF`
 
 Turn off lighting.
 
