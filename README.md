@@ -1,5 +1,9 @@
 # ESP8266-based LED strip controller
 
+## Assembled device
+
+![Device picture](device.jpg)
+
 ## Parts
 
 * [Printed circuit board](http://s.click.aliexpress.com/e/bA27UN7?fromSns=Telegram).
